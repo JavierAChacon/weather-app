@@ -1,28 +1,42 @@
+import type { IconType } from "react-icons"
+import {
+  WiDaySunny,
+  WiDayCloudy,
+  WiCloud,
+  WiFog,
+  WiSprinkle,
+  WiShowers,
+  WiRain,
+  WiSnow,
+  WiStormShowers,
+  WiThunderstorm
+} from "react-icons/wi"
+
 export type WeatherInfo = {
-  icon: string
+  Icon: IconType
   description: string
 }
 
 export const weatherMap: Record<number, WeatherInfo> = {
-  0: { icon: "☀️", description: "Despejado" },
-  1: { icon: "🌤️", description: "Mayormente despejado" },
-  2: { icon: "⛅", description: "Parcialmente nublado" },
-  3: { icon: "☁️", description: "Nublado" },
-  45: { icon: "🌫️", description: "Niebla" },
-  48: { icon: "🌫️", description: "Niebla con escarcha" },
-  51: { icon: "🌦️", description: "Llovizna ligera" },
-  53: { icon: "🌧️", description: "Llovizna moderada" },
-  55: { icon: "🌧️", description: "Llovizna intensa" },
-  61: { icon: "🌦️", description: "Lluvia ligera" },
-  63: { icon: "🌧️", description: "Lluvia moderada" },
-  65: { icon: "🌧️", description: "Lluvia intensa" },
-  71: { icon: "🌨️", description: "Nieve ligera" },
-  73: { icon: "🌨️", description: "Nieve moderada" },
-  75: { icon: "❄️", description: "Nieve intensa" },
-  80: { icon: "🌦️", description: "Chubascos ligeros" },
-  81: { icon: "🌧️", description: "Chubascos moderados" },
-  82: { icon: "🌧️", description: "Chubascos fuertes" },
-  95: { icon: "⛈️", description: "Tormenta eléctrica" },
-  96: { icon: "⛈️", description: "Tormenta con granizo" },
-  99: { icon: "🌩️", description: "Tormenta fuerte con granizo" }
+  0: { Icon: WiDaySunny, description: "Clear sky" },
+  1: { Icon: WiDayCloudy, description: "Mainly clear" },
+  2: { Icon: WiCloud, description: "Partly cloudy" },
+  3: { Icon: WiCloud, description: "Overcast" },
+  45: { Icon: WiFog, description: "Fog" },
+  48: { Icon: WiFog, description: "Depositing rime fog" },
+  51: { Icon: WiSprinkle, description: "Light drizzle" },
+  53: { Icon: WiShowers, description: "Moderate drizzle" },
+  55: { Icon: WiRain, description: "Dense drizzle" },
+  61: { Icon: WiSprinkle, description: "Light rain" },
+  63: { Icon: WiRain, description: "Moderate rain" },
+  65: { Icon: WiRain, description: "Heavy rain" },
+  71: { Icon: WiSnow, description: "Light snow" },
+  73: { Icon: WiSnow, description: "Moderate snow" },
+  75: { Icon: WiSnow, description: "Heavy snow" },
+  80: { Icon: WiShowers, description: "Light showers" },
+  81: { Icon: WiRain, description: "Moderate showers" },
+  82: { Icon: WiRain, description: "Violent showers" },
+  95: { Icon: WiStormShowers, description: "Thunderstorm" },
+  96: { Icon: WiThunderstorm, description: "Thunderstorm with hail" },
+  99: { Icon: WiThunderstorm, description: "Severe thunderstorm with hail" }
 }

@@ -9,6 +9,8 @@ const SearchBar = () => {
   const setCityName = useWeatherStore((state) => state.setCityName)
   const setCurrentWeather = useWeatherStore((state) => state.setCurrentWeather)
   const setForecastDaily = useWeatherStore((state) => state.setForecastDaily)
+  const setIsLoading = useWeatherStore((state) => state.setIsLoading)
+  const setError = useWeatherStore((state) => state.setError)
 
   const [cityQuery, setCityQuery] = useState("")
   const [debouncedCityQuery] = useDebounce(cityQuery, 300)
@@ -42,6 +44,9 @@ const SearchBar = () => {
     localStorage.setItem("lastCity", JSON.stringify(city))
 
     try {
+      setIsLoading(true)
+      setError(null)
+
       const current = await fetchCurrentWeather(city)
       setCurrentWeather(current)
 
@@ -49,35 +54,37 @@ const SearchBar = () => {
       setForecastDaily(forecast)
     } catch (err) {
       console.error("Error al obtener datos del clima:", err)
+      setError("No se pudo obtener el clima para la ciudad seleccionada.")
       setCurrentWeather(null)
       setForecastDaily(null)
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
-    <div className='mx-auto w-1/2 p-4'>
-      <div className='flex items-center space-x-2 bg-gray-100 p-2'>
-        <CiSearch />
+    <div className='relative mx-auto my-6 flex w-full max-w-xl flex-col'>
+      <div className='flex items-center gap-2 rounded-full bg-slate-800 px-4 py-2 shadow-md ring-blue-500 focus-within:ring-2'>
+        <CiSearch className='text-xl text-slate-300' />
         <input
-          className='w-full bg-transparent outline-none'
-          placeholder='Buscar ciudad...'
+          type='text'
+          placeholder='Search city...'
+          className='w-full bg-transparent px-2 py-1 text-white placeholder-slate-400 focus:outline-none'
           value={cityQuery}
           onChange={(e) => {
             setCityQuery(e.target.value)
             setSelectedCity(null)
-            setCurrentWeather(null)
-            setForecastDaily(null)
           }}
         />
       </div>
 
       {cityOptions.length > 0 && (
-        <ul className='mt-2 max-h-60 overflow-y-auto bg-white text-black shadow'>
+        <ul className='absolute top-14 z-10 w-full rounded-md bg-slate-700 shadow-lg'>
           {cityOptions.map((city) => (
             <li
-              key={city.id}
+              key={`${city.name}-${city.latitude}-${city.longitude}`}
+              className='cursor-pointer px-4 py-2 text-white hover:bg-slate-600'
               onClick={() => handleCitySelect(city)}
-              className='cursor-pointer p-2 hover:bg-gray-200'
             >
               {city.name}, {city.country}
             </li>

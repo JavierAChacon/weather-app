@@ -15,18 +15,26 @@ type ForecastDaily = {
 
 type WeatherStore = {
   currentWeather: CurrentWeather | null
+  forecastDaily: ForecastDaily | null
   cityName: string
+  isLoading: boolean
+  error: string | null
   setCityName: (name: string) => void
   setCurrentWeather: (weather: CurrentWeather | null) => void
-  forecastDaily: ForecastDaily | null
   setForecastDaily: (forecast: ForecastDaily | null) => void
+  setIsLoading: (loading: boolean) => void
+  setError: (error: string | null) => void
 }
 
 export const useWeatherStore = create<WeatherStore>((set) => ({
   currentWeather: null,
+  forecastDaily: null,
   cityName: "",
+  isLoading: false,
+  error: null,
   setCityName: (name) => set({ cityName: name }),
   setCurrentWeather: (weather) => set({ currentWeather: weather }),
-  forecastDaily: null,
-  setForecastDaily: (forecast) => set({ forecastDaily: forecast })
+  setForecastDaily: (forecast) => set({ forecastDaily: forecast }),
+  setIsLoading: (loading) => set({ isLoading: loading }),
+  setError: (error) => set({ error })
 }))

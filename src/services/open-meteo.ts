@@ -1,4 +1,5 @@
 import axios from "axios"
+import dayjs from "dayjs"
 import type { CityResult } from "../types/CityResult"
 
 export type CurrentWeather = {
@@ -27,9 +28,19 @@ export const fetchCurrentWeather = async (city: CityResult): Promise<CurrentWeat
 export const fetchForecast = async (city: CityResult): Promise<ForecastDaily> => {
   const { latitude, longitude } = city
 
-  const response = await axios.get(
-    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=auto`
-  )
+  const startDate = dayjs().add(1, "day").format("YYYY-MM-DD") // mañana
+  const endDate = dayjs().add(7, "day").format("YYYY-MM-DD") // 7 días desde mañana
+
+  const response = await axios.get("https://api.open-meteo.com/v1/forecast", {
+    params: {
+      latitude,
+      longitude,
+      daily: "temperature_2m_max,temperature_2m_min,weather_code",
+      timezone: "auto",
+      start_date: startDate,
+      end_date: endDate
+    }
+  })
 
   return response.data.daily
 }
