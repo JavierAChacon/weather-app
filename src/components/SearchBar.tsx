@@ -11,6 +11,7 @@ const SearchBar = () => {
   const setForecastDaily = useWeatherStore((state) => state.setForecastDaily)
   const setIsLoading = useWeatherStore((state) => state.setIsLoading)
   const setError = useWeatherStore((state) => state.setError)
+  const error = useWeatherStore((state) => state.error)
 
   const [cityQuery, setCityQuery] = useState("")
   const [debouncedCityQuery] = useDebounce(cityQuery, 300)
@@ -74,6 +75,7 @@ const SearchBar = () => {
           onChange={(e) => {
             setCityQuery(e.target.value)
             setSelectedCity(null)
+            setError(null)
           }}
         />
       </div>
@@ -91,6 +93,7 @@ const SearchBar = () => {
           ))}
         </ul>
       )}
+      {error && <p className='mt-3 text-sm text-red-400'>{error}</p>}
     </div>
   )
 }
