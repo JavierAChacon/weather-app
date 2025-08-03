@@ -54,8 +54,8 @@ const SearchBar = () => {
       const forecast = await fetchForecast(city)
       setForecastDaily(forecast)
     } catch (err) {
-      console.error("Error al obtener datos del clima:", err)
-      setError("No se pudo obtener el clima para la ciudad seleccionada.")
+      console.error("Error fetching weather data:", err)
+      setError("Could not fetch weather for the selected city.")
       setCurrentWeather(null)
       setForecastDaily(null)
     } finally {
