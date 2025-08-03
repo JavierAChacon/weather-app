@@ -14,6 +14,7 @@ function App() {
   const currentWeather = useWeatherStore((state) => state.currentWeather)
   const forecastDaily = useWeatherStore((state) => state.forecastDaily)
   const setIsLoading = useWeatherStore((state) => state.setIsLoading)
+  const isLoading = useWeatherStore((state) => state.isLoading)
 
   useEffect(() => {
     const savedCity = localStorage.getItem("lastCity")
@@ -41,9 +42,9 @@ function App() {
   }, [setCityName, setCurrentWeather, setForecastDaily, setIsLoading])
 
   return (
-    <div className='min-h-screen bg-[#100E1D] font-sans text-white'>
+    <div className='min-h-screen bg-[#100E1D] px-4 font-sans text-white'>
       <SearchBar />
-      {!currentWeather && !forecastDaily ? (
+      {!currentWeather && !forecastDaily && !isLoading ? (
         <Welcome />
       ) : (
         <>
